@@ -2207,7 +2207,7 @@ input, select, textarea {
 		position: fixed;
 		top: auto;
 		bottom: 2em;
-		left: 50%;
+		left: calc(50% - 0.5em);
 		transform: translateX(-50%);
 	}
 
