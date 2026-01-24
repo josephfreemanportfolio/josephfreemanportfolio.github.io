@@ -236,6 +236,52 @@
 
 			});
 
+		// Gallery expand/collapse functionality
+			$('.gallery-group').each(function() {
+				var $group = $(this);
+				var $categoryThumb = $group.find('> .thumb');
+				var $expandOverlay = $categoryThumb.find('.expand-overlay');
+				var $galleryItems = $group.find('.gallery-item');
+				var $backBtn = $group.find('.gallery-back');
+
+				// Set background images on gallery items from their href
+				$galleryItems.each(function() {
+					var $item = $(this);
+					var imageUrl = $item.attr('href');
+					$item.css('background-image', 'url(' + imageUrl + ')');
+				});
+
+				// Expand overlay click - expand the gallery
+				$expandOverlay.on('click', function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+
+					// Expand this gallery
+					$group.addClass('expanded');
+					$body.addClass('gallery-expanded');
+
+					// Scroll to top of expanded gallery
+					$group.scrollTop(0);
+				});
+
+				// Back button click - collapse the gallery
+				$backBtn.on('click', function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+
+					$group.removeClass('expanded');
+					$body.removeClass('gallery-expanded');
+				});
+			});
+
+			// Close expanded gallery on Escape key
+			$window.on('keyup', function(event) {
+				if (event.keyCode == 27 && $body.hasClass('gallery-expanded')) {
+					$('.gallery-group.expanded').removeClass('expanded');
+					$body.removeClass('gallery-expanded');
+				}
+			});
+
 		// Poptrox - Initialize on each gallery group separately.
 			$('.gallery-group').each(function() {
 				var $group = $(this);
